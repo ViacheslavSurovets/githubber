@@ -18,7 +18,10 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
           More
         </a>
 
-        {login==='ViacheslavSurovets' ? <a href= {mine_url} className='btn btn-white btn-keyframe'>Give Offer</a>: null}
+        {login==='ViacheslavSurovets' &&  <a 
+        href= {mine_url} 
+        className='btn btn-white btn-keyframe'
+        target='blank'>Give Offer</a>}
       </div>
     </div>
   );
