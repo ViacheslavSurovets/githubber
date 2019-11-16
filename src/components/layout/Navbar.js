@@ -1,5 +1,5 @@
 import React  from 'react';
-import PropTypes from 'prop-types';
+/* import PropTypes from 'prop-types'; */
 
 
 const Navbar = ({ icon, title }) => {
@@ -8,7 +8,7 @@ const Navbar = ({ icon, title }) => {
         return (
             <nav className="navbar bg-primary">
                <h1>
-               <i class={icon}></i> {title}
+               <i className={icon}></i> {title}
                 </h1>
             </nav>
         )
@@ -16,13 +16,13 @@ const Navbar = ({ icon, title }) => {
 }
 
  Navbar.defaultProps = {
-    title: 'Github-finder',
+    title: 'Githubber',
     icon: 'fab fa-github'
 };
 
- Navbar.propTypes = {
+/*  Navbar.propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired
-}
+} */
 
 export default Navbar

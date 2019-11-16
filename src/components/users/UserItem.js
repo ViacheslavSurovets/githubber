@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const UserItem = ({ user: { login, avatar_url, html_url } }) => {
+
   return (
     <div className='card text-center'>
       <img
@@ -16,10 +17,14 @@ const UserItem = ({ user: { login, avatar_url, html_url } }) => {
         <a href={html_url} className='btn btn-dark btn-sm my-1'>
           More
         </a>
+
+        {login==='ViacheslavSurovets' ? <a href= {mine_url} className='btn btn-white btn-keyframe'>Give Offer</a>: null}
       </div>
     </div>
   );
 };
+
+const mine_url = 'https://www.linkedin.com/in/viacheslav-surovets-239a6b137'
 
 UserItem.propTypes = {
   user: PropTypes.object.isRequired
