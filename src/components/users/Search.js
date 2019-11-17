@@ -1,43 +1,33 @@
-import React, { Component } from 'react'
+import React, {  useState } from 'react'
 import PropTypes from 'prop-types'
 
-export class Search extends Component {
-state= {
-    text: ''
-}
+const Search = ({searchUsers, setAlertMsg, showClear, clearUsers,}) => {
+const [text, setText] = useState('');
 
-static propTypes ={
-    searchUsers: PropTypes.func.isRequired,
-    clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired,
-    setAlert: PropTypes.func.isRequired
-}
-onSubmit = (e) => {
+
+const onSubmit = (e) => {
     e.preventDefault();
 
-    if(this.state.text === ''){
-        this.props.setAlert('Please write something...', 'light')
+    if(text === ''){
+       setAlertMsg('Please write something...', 'light')
     } else {
-        this.props.searchUsers(this.state.text)
-        this.setState({text: ''})
+        searchUsers(text)
+        setText('')
     }    
 }
 
-onChange = (e) =>  this.setState({[e.target.name]: e.target.value})
+const onChange = (e) =>  setText( e.target.value)
 
 
-
-    render() {
-        const {showClear, clearUsers} = this.props;
         return (
             <div>
-                <form className="form" onSubmit={this.onSubmit}>
+                <form className="form" onSubmit={onSubmit}>
                     <input 
                     type="text"
                      name="text"
                      placeholder="Search for ViacheslavSurovets or someone else..."
-                   value={this.state.text}
-                    onChange={this.onChange}
+                   value={text}
+                    onChange={onChange}
                        />
                     <input type="submit" value="Search" className="btn btn-dark btn-block"/>
                 </form>
@@ -46,6 +36,13 @@ onChange = (e) =>  this.setState({[e.target.name]: e.target.value})
             </div>
         )
     }
-}
+
 
 export default Search
+
+Search.propTypes ={
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+    setAlertMsg: PropTypes.func.isRequired
+}

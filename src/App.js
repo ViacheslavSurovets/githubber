@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState, useEffect} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
@@ -10,13 +10,23 @@ import './App.css';
 
 
 
-class App extends Component {
-  state = {
-    users: [],
-    user: {},
-    loading: false,
-    alert: null
-  };
+function App () {
+  
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(null)
+  
+  useEffect(()=>{
+  setLoading(true);
+  async function res(){
+    const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+    return setUsers(res.data)  
+  }
+  res()
+setLoading(false)
+},[])
+  
+ 
 
 /* async componentDidMount(){
   
@@ -30,40 +40,41 @@ this.setState({ users: res.data, loading: false })
 
 
 
-searchUsers = async text =>{
-  this.setState({ loading: true });
+const searchUsers = async text =>{
+  setLoading( true );
 const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-
-this.setState({ users: res.data.items, loading: false });
+setUsers(res.data.items)
+setLoading(false );
 }
 
 //clear users from state
-clearUsers = () =>{
-this.setState({ users: [], loading: false })
+const clearUsers = () =>{
+setUsers( [] )
+setLoading(false)
 }
 
-setAlert = (msg, type) =>{
-  this.setState({alert: {msg, type}})
+const setAlertMsg = (msg, type) =>{
+  setAlert({msg, type})
 
-  setTimeout(() => this.setState({ alert: null}), 5000)
+  setTimeout(() => setAlert(null), 5000)
 }
 
-  render() {
-    const { users, loading} = this.state;
+ 
+  
     return(
       <Router>
         <div className="App">
       <Navbar />
       <div className='container'></div>
-      <Alert alert={this.state.alert}/>
+      <Alert alert={alert}/>
       <Switch>
         <Route exact path='/' render={props =>(
           <Fragment>
       <Search 
-      searchUsers= {this.searchUsers} 
-      clearUsers={this.clearUsers} 
+      searchUsers= {searchUsers} 
+      clearUsers={clearUsers} 
       showClear={users.length > 0 ? true : false}
-      setAlert={this.setAlert}
+      setAlertMsg={setAlertMsg}
       />
       <Users loading= {loading} users={users}/>
           </Fragment>
@@ -76,7 +87,7 @@ setAlert = (msg, type) =>{
       </Router>
     
     )
-    }
+
 
   
 }
