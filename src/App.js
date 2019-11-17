@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Users from "./components/users/Users";
@@ -12,14 +12,6 @@ import AlertState from "./context/alert/AlertState";
 import "./App.css";
 
 function App() {
-
-  const [alert, setAlert] = useState(null);
-
-  const setAlertMsg = (msg, type) => {
-    setAlert({ msg, type });
-
-    setTimeout(() => setAlert(null), 5000);
-  };
 
   return (
     <GitHubberState>

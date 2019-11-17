@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect } from "react";
-import axios from "axios";
+import React, { useReducer } from "react";
 import AlertReducer from "./alertReducer";
 import AlertContext from "./alertContext";
 
@@ -13,9 +12,7 @@ const AlertState = props => {
 
   const [state, dispatch] = useReducer(AlertReducer, initialState);
 
-  
 
-  
 
   // Set alert
    const setAlert = (msg, type) => {
@@ -24,8 +21,6 @@ const AlertState = props => {
         payload: {msg, type}
     })
     
-   
-
     setTimeout(() => dispatch({type: REMOVE_ALERT}), 5000);
   };
 

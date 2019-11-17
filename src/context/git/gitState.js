@@ -7,8 +7,6 @@ import {
   SEARCH_USERS,
   CLEAR_USERS,
   SET_LOADING,
-  SET_ALERT,
-  REMOVE_ALERT,
   SET_DEFAULT_USERS
 } from "../types";
 
