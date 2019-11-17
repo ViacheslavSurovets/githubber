@@ -1,48 +1,52 @@
-import React, {  useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
+import GitContext from "../../context/git/gitContext";
 
-const Search = ({searchUsers, setAlertMsg, showClear, clearUsers,}) => {
-const [text, setText] = useState('');
+const Search = ({ setAlertMsg }) => {
+  const gitContext = useContext(GitContext);
 
+  const [text, setText] = useState("");
 
-const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
 
-    if(text === ''){
-       setAlertMsg('Please write something...', 'light')
+    if (text === "") {
+      setAlertMsg("Please write something...", "light");
     } else {
-        searchUsers(text)
-        setText('')
-    }    
-}
-
-const onChange = (e) =>  setText( e.target.value)
-
-
-        return (
-            <div>
-                <form className="form" onSubmit={onSubmit}>
-                    <input 
-                    type="text"
-                     name="text"
-                     placeholder="Search for ViacheslavSurovets or someone else..."
-                   value={text}
-                    onChange={onChange}
-                       />
-                    <input type="submit" value="Search" className="btn btn-dark btn-block"/>
-                </form>
-                {showClear && <button className='btn btn-light btn-block' onClick={clearUsers}>Clear</button>}
-                
-            </div>
-        )
+      gitContext.searchUsers(text);
+      setText("");
     }
+  };
 
+  const onChange = e => setText(e.target.value);
 
-export default Search
+  return (
+    <div>
+      <form className="form" onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="text"
+          placeholder="Search for ViacheslavSurovets or someone else..."
+          value={text}
+          onChange={onChange}
+        />
+        <input
+          type="submit"
+          value="Search"
+          className="btn btn-dark btn-block"
+        />
+      </form>
+      {gitContext.users.length > 0  && (
+        <button className="btn btn-light btn-block" onClick={gitContext.clearUsers}>
+          Clear
+        </button>
+      )}
+    </div>
+  );
+};
 
-Search.propTypes ={
-    searchUsers: PropTypes.func.isRequired,
-    clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.bool.isRequired,
-    setAlertMsg: PropTypes.func.isRequired
-}
+export default Search;
+
+Search.propTypes = {
+  setAlertMsg: PropTypes.func.isRequired
+};
