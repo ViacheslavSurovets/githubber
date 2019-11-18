@@ -5,6 +5,7 @@ import Users from "./components/users/Users";
 import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
+import NotFound from './components/pages/NotFound'
 
 import GitHubberState from "./context/git/gitState";
 import AlertState from "./context/alert/AlertState";
@@ -33,6 +34,7 @@ function App() {
               )}
             />
             <Route exact path="/about" component={About} />
+             <Route component={NotFound} />
             )}/>
           </Switch>
         </div>
