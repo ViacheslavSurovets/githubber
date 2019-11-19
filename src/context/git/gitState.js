@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
-import axios from "axios";
 import GitReducer from "./gitReducer";
 import GitContext from "./gitContext";
+import {getUsers, getDefaultUsers} from '../../gitService'
 
 import {
   SEARCH_USERS,
@@ -10,16 +10,6 @@ import {
   SET_DEFAULT_USERS
 } from "../types";
 
-let gitClientId;
-let gitSecretId;
-
-if( process.env.NODE_ENV !== 'production' ){
-  gitClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
-  gitSecretId = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
-} else {
-  gitClientId = process.env.GITHUB_CLIENT_ID;
-  gitSecretId = process.env.GITHUB_CLIENT_SECRET;
-}
 
 
 const GitHubberState = props => {
@@ -33,9 +23,7 @@ const GitHubberState = props => {
   //Search Users
   const searchUsers = async text => {
     setLoading();
-    const res = await axios.get(
-      `https://api.github.com/search/users?q=${text}&client_id=${gitClientId}&&client_secret=${gitSecretId}`
-    );
+    const res = await getUsers (text)
 
     dispatch({
       type: SEARCH_USERS,
@@ -47,9 +35,7 @@ const GitHubberState = props => {
   useEffect(() => {
     setLoading();
     async function resData() {
-      const res = await axios.get(
-        `https://api.github.com/users?client_id=${gitClientId}&client_secret=${gitSecretId}`
-      );
+      const res = await getDefaultUsers();
        dispatch({
         type: SET_DEFAULT_USERS,
         payload: res.data
